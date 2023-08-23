@@ -10,3 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DiscountType {
+  FLAT
+  PERCENTAGE
+}
+
+model Product {
+  id             Int         @id @default(autoincrement())
+  name           String
+  description    String
+  price          Float
+  imageUrl       String      @db.VarChar(255)  // assuming URL will be stored as a varchar string
+  tastingNotes   String?
+  process        String?
+  producer       String?
+  cooperative    String?
+  varietals      String?
+  orderItems     OrderItem[] 
+}
+
+model Inquiry {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String
+  message        String
+  timestamp      DateTime @default(now())
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String?
+  orders   Order[]
+}
+
+model Order {
+  id             Int        @id @default(autoincrement())
+  userId         Int?       // This is nullable to handle guest checkouts
+  user           User?      @relation(fields: [userId], references: [id])
+  guestDetail    String?    // This could be JSON or a string serialization of guest details. Only used if userId is null.
+  paymentStatus  String
+  orderItems     OrderItem[]
+  subtotal       Float      // Capturing the total amount of the order (before discounts, taxes, or any other additions)
+  orderDiscount  Float?     // Discount amount for the entire order.
+  discountType   DiscountType? // Enum to indicate the type of discount
+  totalAfterDiscount Float? // This can be computed based on the discount type and amount
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int
+  order      Order   @relation(fields: [orderId], references: [id])
+  orderId    Int
+  priceAtOrder Float  // Price of the product at the time of order
+  quantity   Int 
+  discount      Float?  // Discount amount. This can be a flat amount or a percentage based on discountType.
+  discountType  DiscountType?  // Enum to indicate the type of discount (e.g., FLAT or PERCENTAGE)
+  netPrice      Float  // This can be calculated as priceAtOrder - discount (if FLAT) or priceAtOrder * (1 - discount/100) (if PERCENTAGE).
+}
+
+
+
+
