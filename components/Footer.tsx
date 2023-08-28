@@ -7,8 +7,8 @@ function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-darkpattern">
-      <div className="py-16 md:py-24 lg:py-32 max-w-4xl mx-auto px-6 md:px-8 lg:px-0">
-        <p className="font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white text-center">
+      <div className="py-16 md:py-24 lg:py-32 max-w-4xl mx-auto px-6 md:px-8 lg:px-0 text-center">
+        <p className="font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white pb-12">
           Quality coffee sourced globally
         </p>
         <ButtonPrimary link={'/contact'} icon={<ArrowDownRightIcon />}>
