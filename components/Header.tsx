@@ -30,7 +30,7 @@ function Header() {
   const currentRoute = usePathname();
   return (
     <header>
-      <nav className="flex items-center justify-between max-w-screen-2xl mx-auto py-16">
+      <nav className="flex items-center justify-between max-w-screen-2xl mx-6 md:mx-8 2xl:mx-auto py-16">
         <Link href={'/'}>
           <Image
             src="/assets/logo/logo-dark.svg"
@@ -39,7 +39,7 @@ function Header() {
             height={37}
           />
         </Link>
-        <div className="flex items-center gap-10">
+        {/* <div className="flex items-center gap-10">
           {mainPages.map(({ page, path }) => (
             <Link href={path} key={page}>
               {page}
@@ -57,7 +57,7 @@ function Header() {
               {page}
             </Link>
           ))}
-        </div>
+        </div> */}
       </nav>
     </header>
   );

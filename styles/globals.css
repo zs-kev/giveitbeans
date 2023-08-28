@@ -48,7 +48,7 @@
   }
 
   h1 {
-    @apply font-Guy text-8xl text-primary text-center;
+    @apply font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-primary text-center;
   }
 
   p,
@@ -57,7 +57,7 @@
     @apply font-Zilla text-muted;
   }
   p {
-    @apply text-xl;
+    @apply text-base md:text-lg lg:text-xl;
   }
   a {
     @apply text-base;
