@@ -1,33 +1,30 @@
 'use client';
 
-import { MapPinIcon, ShoppingCartIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
 
-const mainPages: { page: string; path: string }[] = [
-  { page: 'Shop', path: '/shop' },
-  { page: 'Subscription', path: '/subscription' },
-  { page: 'Learn', path: '/learn' },
-  { page: 'Conact', path: '/contact' },
-];
+// const mainPages: { page: string; path: string }[] = [
+//   { page: 'Shop', path: '/shop' },
+//   { page: 'Subscription', path: '/subscription' },
+//   { page: 'Learn', path: '/learn' },
+//   { page: 'Conact', path: '/contact' },
+// ];
 
-const iconPages: { page: string; path: string; icon: ReactNode }[] = [
-  {
-    page: 'Cart',
-    path: '/cart',
-    icon: <ShoppingCartIcon className="w-4" />,
-  },
-  {
-    page: 'Store Locator',
-    path: '/store-locator',
-    icon: <MapPinIcon className="w-4" />,
-  },
-];
+// const iconPages: { page: string; path: string; icon: ReactNode }[] = [
+//   {
+//     page: 'Cart',
+//     path: '/cart',
+//     icon: <ShoppingCartIcon className="w-4" />,
+//   },
+//   {
+//     page: 'Store Locator',
+//     path: '/store-locator',
+//     icon: <MapPinIcon className="w-4" />,
+//   },
+// ];
 
 function Header() {
-  const currentRoute = usePathname();
+  // const currentRoute = usePathname();
   return (
     <header>
       <nav className="flex items-center justify-between max-w-screen-2xl mx-6 md:mx-8 2xl:mx-auto py-16">

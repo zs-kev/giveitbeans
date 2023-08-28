@@ -1,4 +1,5 @@
 import ButtonPrimary from '@/components/ButtonPrimary';
+import ProductListing from '@/components/ProductListing';
 import Image from 'next/image';
 
 const HomePage = () => {
@@ -104,6 +105,13 @@ const HomePage = () => {
               within 48 hours
             </p>
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="flex items-stretch justify-between flex-col lg:flex-row maxWidth py-16 md:py-24 lg:py-32">
+          <ProductListing />
+          <ProductListing />
+          <ProductListing />
         </div>
       </section>
     </>

@@ -50,6 +50,9 @@
   h1 {
     @apply font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-primary text-center;
   }
+  h2 {
+    @apply font-Guy text-4xl text-primary;
+  }
   h3 {
     @apply font-Guy text-xl text-secondary;
   }
