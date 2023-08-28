@@ -108,7 +108,7 @@ const HomePage = () => {
         </div>
       </section>
       <section>
-        <div className="flex items-stretch justify-between flex-col lg:flex-row maxWidth py-16 md:py-24 lg:py-32">
+        <div className="flex items-stretch justify-between flex-col lg:flex-row gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
           <ProductListing />
           <ProductListing />
           <ProductListing />

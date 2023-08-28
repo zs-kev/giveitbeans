@@ -6,7 +6,7 @@ interface ProductListingProps {}
 
 const ProductListing: FC<ProductListingProps> = () => {
   return (
-    <div className="bg-white rounded-2xl flex flex-col items-stretch mx-3 justify-between p-14 mt-24">
+    <div className="bg-white rounded-2xl flex flex-col items-stretch mx-3 justify-between p-10 sm:p-14 mt-24">
       <Image
         src="/assets/images/products/elparaiso-crop.png"
         alt="El Paraiso"
