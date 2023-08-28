@@ -13,7 +13,7 @@ function Footer() {
       <hr className="max-w-screen-2xl border-muted mx-6 md:mx-8 2xl:mx-auto " />
       <div className="pt-12 md:pt-16 lg:pt-24 pb-16 px-6 md:px-8 lg:px-0">
         <Image
-          src="/assets/logo/Logo-vertical-white.svg"
+          src="/assets/logo/logo-vertical-white.svg"
           alt="Give it beans"
           width={153}
           height={87}
