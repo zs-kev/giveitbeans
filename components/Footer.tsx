@@ -1,5 +1,7 @@
+import { ArrowDownRightIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import Link from 'next/link';
+import ButtonPrimary from './ButtonPrimary';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,6 +11,9 @@ function Footer() {
         <p className="font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-white text-center">
           Quality coffee sourced globally
         </p>
+        <ButtonPrimary link={'/contact'} icon={<ArrowDownRightIcon />}>
+          Contact us today
+        </ButtonPrimary>
       </div>
       <hr className="max-w-screen-2xl border-muted mx-6 md:mx-8 2xl:mx-auto " />
       <div className="pt-12 md:pt-16 lg:pt-24 pb-16 px-6 md:px-8 lg:px-0">
