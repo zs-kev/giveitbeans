@@ -50,7 +50,9 @@
   h1 {
     @apply font-Guy text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-primary text-center;
   }
-
+  h3 {
+    @apply font-Guy text-xl text-secondary;
+  }
   p,
   a,
   li {
@@ -61,5 +63,9 @@
   }
   a {
     @apply text-base;
+  }
+
+  .maxWidth {
+    @apply max-w-screen-2xl mx-6 md:mx-8 2xl:mx-auto;
   }
 }
