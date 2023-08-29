@@ -38,7 +38,17 @@ const toRadians = (degrees: number) => {
 
 const LocationPage = () => {
   const [userLocation, setUserLocation] = useState(center);
-  const [selectedCafe, setSelectedCafe] = useState('');
+  const [isUserLocationSelected, setIsUserLocationSelected] = useState(false);
+  const [selectedCafe, setSelectedCafe] = useState<null | {
+    id: string;
+    latitude: number;
+    longitude: number;
+    name: string;
+    phone: string;
+    hours: string;
+    description: string;
+    isUserLocation?: boolean;
+  }>(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -106,28 +116,40 @@ const LocationPage = () => {
             <Marker
               position={userLocation}
               onClick={() => {
-                setSelectedCafe('Your Location');
+                setSelectedCafe({
+                  id: 'user-location',
+                  latitude: userLocation.lat,
+                  longitude: userLocation.lng,
+                  name: 'Your Location',
+                  phone: '',
+                  hours: '',
+                  description: '',
+                  isUserLocation: true,
+                });
               }}
             />
             {selectedCafe && (
               <InfoWindow
-                position={userLocation}
+                position={{
+                  lat: selectedCafe.latitude,
+                  lng: selectedCafe.longitude,
+                }}
                 onCloseClick={() => {
-                  setSelectedCafe('');
+                  setSelectedCafe(null);
                 }}
               >
                 <div>
-                  <h2>{selectedCafe}</h2>
+                  <h2>{selectedCafe.name}</h2>
                 </div>
               </InfoWindow>
             )}
 
-            {cafesInfo.map((cafe) => (
+            {closestCafes.map((cafe) => (
               <Marker
                 key={cafe.id}
                 position={{ lat: cafe.latitude, lng: cafe.longitude }}
                 onClick={() => {
-                  setSelectedCafe(cafe.name);
+                  setSelectedCafe(cafe);
                 }}
               />
             ))}
