@@ -10,16 +10,17 @@ import {
 } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
 
-type CafeInfo = {
-  id: string;
-  lat: number;
-  lng: number;
-  name: string;
-  phone: string;
-  hours: string;
-  description: string;
-  isUserLocation?: boolean;
-};
+const cafesInfo = cafes.features.map((feature) => {
+  return {
+    id: feature.properties.storeid,
+    latitude: feature.geometry.coordinates[0],
+    longitude: feature.geometry.coordinates[1],
+    name: feature.properties.name,
+    phone: feature.properties.phone,
+    hours: feature.properties.hours,
+    description: feature.properties.description,
+  };
+});
 
 const mapContainerStyle = {
   height: '400px',
@@ -31,47 +32,23 @@ const center = {
   lng: 28.0588,
 };
 
+const toRadians = (degrees: number) => {
+  return (degrees * Math.PI) / 180;
+};
+
 const LocationPage = () => {
   const [userLocation, setUserLocation] = useState(center);
-  const [closestCafes, setClosestCafes] = useState<CafeInfo[]>([]);
+  const [isUserLocationSelected, setIsUserLocationSelected] = useState(false);
   const [selectedCafe, setSelectedCafe] = useState<null | {
     id: string;
-    lat: number;
-    lng: number;
+    latitude: number;
+    longitude: number;
     name: string;
     phone: string;
     hours: string;
     description: string;
     isUserLocation?: boolean;
   }>(null);
-
-  const fetchData = async () => {
-    const origin = userLocation;
-    const destinations = cafes.features.map((feature) => ({
-      lat: feature.geometry.coordinates[0],
-      lng: feature.geometry.coordinates[1],
-      id: feature.properties.storeid,
-    }));
-
-    try {
-      const res = await fetch('/api/calculateDistances', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ origin, destinations }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setClosestCafes(data);
-        console.log(data);
-      } else {
-        console.error(`Error: ${res.status} ${res.statusText}`);
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
-  };
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -82,18 +59,51 @@ const LocationPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, [userLocation]);
+  const calculateDistance = (
+    lat1: number,
+    long1: number,
+    lat2: number,
+    long2: number
+  ) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(long2 - long1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in km
+    return distance;
+  };
+
+  const closestCafes = cafesInfo.sort((a, b) => {
+    return (
+      calculateDistance(
+        userLocation.lat,
+        userLocation.lng,
+        a.latitude,
+        a.longitude
+      ) -
+      calculateDistance(
+        userLocation.lat,
+        userLocation.lng,
+        b.latitude,
+        b.longitude
+      )
+    );
+  });
 
   return (
     <>
       <section>
-        <div className="maxWidth text-center pb-16 md:pt-6 lg:pt-10 xl:pt-14">
+        <div className="maxWdith text-center pb-16 md:pt-6 lg:pt-10 xl:pt-14">
           <h1>Visit us</h1>
           <p className="max-w-md mx-auto pt-4 pb-7 lg:py-7 xl:py-9">
-            We love having a full house, so we&apos;ll be waiting for you every
-            day of the week at one of our little nests.
+            We love having a full house, so we&apos;ll be waiting for you
+            everyday of the week at one of out little nests
           </p>
           <ButtonPrimary link={''}>Find a cafe</ButtonPrimary>
         </div>
@@ -108,8 +118,8 @@ const LocationPage = () => {
               onClick={() => {
                 setSelectedCafe({
                   id: 'user-location',
-                  lat: userLocation.lat,
-                  lng: userLocation.lng,
+                  latitude: userLocation.lat,
+                  longitude: userLocation.lng,
                   name: 'Your Location',
                   phone: '',
                   hours: '',
@@ -121,8 +131,8 @@ const LocationPage = () => {
             {selectedCafe && (
               <InfoWindow
                 position={{
-                  lat: selectedCafe.lat,
-                  lng: selectedCafe.lng,
+                  lat: selectedCafe.latitude,
+                  lng: selectedCafe.longitude,
                 }}
                 onCloseClick={() => {
                   setSelectedCafe(null);
@@ -137,7 +147,7 @@ const LocationPage = () => {
             {closestCafes.map((cafe) => (
               <Marker
                 key={cafe.id}
-                position={{ lat: cafe.lat, lng: cafe.lng }}
+                position={{ lat: cafe.latitude, lng: cafe.longitude }}
                 onClick={() => {
                   setSelectedCafe(cafe);
                 }}
