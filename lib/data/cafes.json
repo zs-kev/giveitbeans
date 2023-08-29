@@ -1,4 +1,65 @@
-[
-  { "id": 1, "name": "Linksfield", "latitude": -26.1632, "longitude": 28.1073 },
-  { "id": 2, "name": "Strydompark", "latitude": -26.0801, "longitude": 27.9781 }
-]
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-26.1632066, 28.1073149]
+      },
+      "type": "Feature",
+      "properties": {
+        "category": "cafe",
+        "hours": "6am - 6pm",
+        "description": "Give It Beans grab and go spot",
+        "name": "Give It Beans Linksfield Square",
+        "phone": "+27 123 654 0987",
+        "storeid": "01"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-26.0800512, 27.9777521]
+      },
+      "type": "Feature",
+      "properties": {
+        "category": "cafe",
+        "hours": "7am - 5pm",
+        "description": "A place to catchup, or just enjoy a quick grab and go coffee and pastry",
+        "name": "Give It Beans Ferndale",
+        "phone": "+27 568 321 7986",
+        "storeid": "02"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-26.0884221, 28.078899]
+      },
+      "type": "Feature",
+      "properties": {
+        "category": "cafe",
+        "hours": "10am - 4pm",
+        "description": "Whatever the occasion, we have the perfect treat for you",
+        "name": "Give It Beans Sandown",
+        "phone": "+27 809 234 6847",
+        "storeid": "03"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-26.1412601, 28.0434208]
+      },
+      "type": "Feature",
+      "properties": {
+        "category": "cafe",
+        "hours": "7:30am - 3:30pm",
+        "description": "Coffee at its best",
+        "name": "Give It Beans Rosebank",
+        "phone": "+27 038 216 8897",
+        "storeid": "04"
+      }
+    }
+  ]
+}

@@ -2,7 +2,30 @@
 
 import ButtonPrimary from '@/components/ButtonPrimary';
 import cafes from '@/lib/data/cafes.json';
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+} from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
+
+const cafesInfo = cafes.features.map((feature) => {
+  return {
+    id: feature.properties.storeid,
+    latitude: feature.geometry.coordinates[0],
+    longitude: feature.geometry.coordinates[1],
+    name: feature.properties.name,
+    phone: feature.properties.phone,
+    hours: feature.properties.hours,
+    description: feature.properties.description,
+  };
+});
+
+const mapContainerStyle = {
+  height: '400px',
+  width: '800px',
+};
 
 const center = {
   lat: -26.1121,
@@ -15,14 +38,15 @@ const toRadians = (degrees: number) => {
 
 const LocationPage = () => {
   const [userLocation, setUserLocation] = useState(center);
+  const [selectedCafe, setSelectedCafe] = useState('');
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation({ lat: latitude, lng: longitude });
       });
-    });
+    }
   }, []);
 
   const calculateDistance = (
@@ -45,7 +69,7 @@ const LocationPage = () => {
     return distance;
   };
 
-  const closestCafes = cafes.sort((a, b) => {
+  const closestCafes = cafesInfo.sort((a, b) => {
     return (
       calculateDistance(
         userLocation.lat,
@@ -73,6 +97,42 @@ const LocationPage = () => {
           </p>
           <ButtonPrimary link={''}>Find a cafe</ButtonPrimary>
         </div>
+        <LoadScript googleMapsApiKey={process.env.GOOGLE!}>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={userLocation}
+            zoom={14}
+          >
+            <Marker
+              position={userLocation}
+              onClick={() => {
+                setSelectedCafe('Your Location');
+              }}
+            />
+            {selectedCafe && (
+              <InfoWindow
+                position={userLocation}
+                onCloseClick={() => {
+                  setSelectedCafe('');
+                }}
+              >
+                <div>
+                  <h2>{selectedCafe}</h2>
+                </div>
+              </InfoWindow>
+            )}
+
+            {cafesInfo.map((cafe) => (
+              <Marker
+                key={cafe.id}
+                position={{ lat: cafe.latitude, lng: cafe.longitude }}
+                onClick={() => {
+                  setSelectedCafe(cafe.name);
+                }}
+              />
+            ))}
+          </GoogleMap>
+        </LoadScript>
       </section>
     </>
   );
