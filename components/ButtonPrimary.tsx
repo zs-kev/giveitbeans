@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowDownRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
