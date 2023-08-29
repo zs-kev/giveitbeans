@@ -1,12 +1,31 @@
+'use client';
+
 import ButtonPrimary from '@/components/ButtonPrimary';
 import ProductListing from '@/components/ProductListing';
 import products from '@/lib/data/mockProducts.json';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import { useRef } from 'react';
 
 const HomePage = () => {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  const cupY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const leafRightY = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
+  const beansTopY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
+  const beansBottomY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+
   return (
     <>
-      <section className="md:pt-6 lg:pt-10 xl:pt-14 relative overflow-hidden text-center px-6 md:px-8 lg:px-0">
+      <section
+        className="md:pt-6 lg:pt-10 xl:pt-14 relative overflow-hidden text-center px-6 md:px-8 lg:px-0"
+        ref={ref}
+      >
         <h1 className="max-w-5xl mx-auto relative z-20">
           Experience a coffee for every mood
         </h1>
@@ -23,48 +42,74 @@ const HomePage = () => {
             alt="El Paraiso"
           />
         </div>
-        <Image
-          src="/assets/images/backgroundImages/latteart.png"
-          alt="Latte Art"
-          width={387}
-          height={376}
+        <motion.div
+          style={{ y: cupY }}
           className="absolute top-64 -left-32 z-10 hidden sm:block"
-        />
-        <Image
-          src="/assets/images/backgroundImages/leafright.png"
-          alt="Latte Art"
-          width={386}
-          height={588}
+        >
+          <Image
+            src="/assets/images/backgroundImages/latteart.png"
+            alt="Latte Art"
+            width={387}
+            height={376}
+          />
+        </motion.div>
+        <motion.div
+          style={{ y: leafRightY }}
           className="absolute top-16 right-0 z-10 hidden lg:block"
-        />
-        <Image
-          src="/assets/images/backgroundImages/beans.png"
-          alt="Latte Art"
-          width={403}
-          height={404}
-          className="absolute top-80 lg:top-96 right-0 md:right-10 lg:right-1/4 z-10 -rotate-90"
-        />
-        <Image
-          src="/assets/images/backgroundImages/beans3.png"
-          alt="Latte Art"
-          width={403}
-          height={446}
-          className="absolute bottom-0 lg:bottom-48 left-0 lg:left-1/4 z-10 -rotate-90 hidden sm:block"
-        />
-        <Image
-          src="/assets/images/backgroundImages/leafwithbeans.png"
-          alt="Latte Art"
-          width={305}
-          height={588}
+        >
+          <Image
+            src="/assets/images/backgroundImages/leafright.png"
+            alt="Latte Art"
+            width={386}
+            height={588}
+          />
+        </motion.div>
+        <motion.div
+          style={{ y: beansTopY }}
+          className="absolute top-80 lg:top-96 right-0 md:right-10 lg:right-1/4 z-10"
+        >
+          <Image
+            src="/assets/images/backgroundImages/beans.png"
+            alt="Latte Art"
+            width={403}
+            height={404}
+            className="-rotate-90"
+          />
+        </motion.div>
+        <motion.div
+          style={{ y: beansBottomY }}
+          className="absolute bottom-0 lg:bottom-48 left-0 lg:left-1/4 z-10 hidden sm:block"
+        >
+          <Image
+            src="/assets/images/backgroundImages/beans3.png"
+            alt="Latte Art"
+            width={403}
+            height={446}
+            className="-rotate-90"
+          />
+        </motion.div>
+        <motion.div
+          style={{ y: leafRightY }}
           className="absolute bottom-32 left-0 z-10 hidden lg:block"
-        />
-        <Image
-          src="/assets/images/backgroundImages/doughnut-sugar.png"
-          alt="Latte Art"
-          width={389}
-          height={366}
+        >
+          <Image
+            src="/assets/images/backgroundImages/leafwithbeans.png"
+            alt="Latte Art"
+            width={305}
+            height={588}
+          />
+        </motion.div>
+        <motion.div
+          style={{ y: cupY }}
           className="absolute bottom-32 right-0 lg:right-7 z-10 hidden md:block"
-        />
+        >
+          <Image
+            src="/assets/images/backgroundImages/doughnut-sugar.png"
+            alt="Latte Art"
+            width={389}
+            height={366}
+          />
+        </motion.div>
       </section>
       <section className="bg-darkpattern py-16 md:py-20">
         <div className="flex lg:items-start lg:justify-between flex-col lg:flex-row gap-14 lg:gap-0 maxWidth">
