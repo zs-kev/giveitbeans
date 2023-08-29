@@ -38,7 +38,7 @@ const toRadians = (degrees: number) => {
 
 const LocationPage = () => {
   const [userLocation, setUserLocation] = useState(center);
-  const [isUserLocationSelected, setIsUserLocationSelected] = useState(false);
+  // const [isUserLocationSelected, setIsUserLocationSelected] = useState(false);
   const [selectedCafe, setSelectedCafe] = useState<null | {
     id: string;
     latitude: number;
