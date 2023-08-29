@@ -1,3 +1,5 @@
+'use client';
+
 import ButtonPrimary from '@/components/ButtonPrimary';
 import cafes from '@/lib/data/cafes.json';
 import L from 'leaflet';
