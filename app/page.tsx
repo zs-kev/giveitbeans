@@ -2,10 +2,26 @@
 
 import ButtonPrimary from '@/components/ButtonPrimary';
 import ProductListing from '@/components/ProductListing';
+import SourceToYou from '@/components/SourceToYou';
 import products from '@/lib/data/mockProducts.json';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
+
+const mainIntro = {
+  hidden: { opacity: 0, y: 25 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const backgroundIntroLeft = {
+  hidden: { x: '-100%' },
+  visible: { x: '0%' },
+};
+
+const backgroundIntroRight = {
+  hidden: { x: '100%' },
+  visible: { x: '0%' },
+};
 
 const HomePage = () => {
   const ref = useRef(null);
@@ -26,23 +42,55 @@ const HomePage = () => {
         className="md:pt-6 lg:pt-10 xl:pt-14 relative overflow-hidden text-center px-6 md:px-8 lg:px-0"
         ref={ref}
       >
-        <h1 className="max-w-5xl mx-auto relative z-20">
+        <motion.h1
+          variants={mainIntro}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5 }}
+          className="max-w-5xl mx-auto relative z-20"
+        >
           Experience a coffee for every mood
-        </h1>
-        <p className="max-w-sm mx-auto pt-4 pb-7 lg:py-7 xl:py-9 relative z-20">
+        </motion.h1>
+        <motion.p
+          variants={mainIntro}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="max-w-sm mx-auto pt-4 pb-7 lg:py-7 xl:py-9 relative z-20"
+        >
           Bringing outstanding flavours to your cup. Here to make your coffee
           time memorable
-        </p>
-        <ButtonPrimary link={'/shop'}>Shop our coffees</ButtonPrimary>
-        <div className="relative w-full max-w-3xl aspect-[199/310] mx-auto sm:-mt-14 z-20">
+        </motion.p>
+        <motion.div
+          variants={mainIntro}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <ButtonPrimary link={'/shop'}>Shop our coffees</ButtonPrimary>
+        </motion.div>
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: 25 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.85 }}
+          className="relative w-full max-w-3xl aspect-[199/310] mx-auto sm:-mt-14 z-20"
+        >
           <Image
             src="/assets/images/products/elparaiso-2.png"
             fill
             priority
             alt="El Paraiso"
           />
-        </div>
+        </motion.div>
         <motion.div
+          variants={backgroundIntroLeft}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.85 }}
           style={{ y: cupY }}
           className="absolute top-64 -left-32 z-10 hidden sm:block"
         >
@@ -54,6 +102,10 @@ const HomePage = () => {
           />
         </motion.div>
         <motion.div
+          variants={backgroundIntroRight}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.85 }}
           style={{ y: leafRightY }}
           className="absolute top-16 right-0 z-10 hidden lg:block"
         >
@@ -65,6 +117,13 @@ const HomePage = () => {
           />
         </motion.div>
         <motion.div
+          variants={{
+            hidden: { opacity: 0, x: -25, y: -15 },
+            visible: { opacity: 1, x: 0, y: 0 },
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 1.15 }}
           style={{ y: beansTopY }}
           className="absolute top-80 lg:top-96 right-0 md:right-10 lg:right-1/4 z-10"
         >
@@ -90,6 +149,10 @@ const HomePage = () => {
         </motion.div>
         <motion.div
           style={{ y: leafRightY }}
+          variants={backgroundIntroLeft}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.85 }}
           className="absolute bottom-32 left-0 z-10 hidden lg:block"
         >
           <Image
@@ -111,48 +174,7 @@ const HomePage = () => {
           />
         </motion.div>
       </section>
-      <section className="bg-darkpattern py-16 md:py-20">
-        <div className="flex lg:items-start lg:justify-between flex-col lg:flex-row gap-14 lg:gap-0 maxWidth">
-          <div className="flex flex-col items-center text-center">
-            <Image
-              src="/assets/images/chars/producer.svg"
-              alt="Direct from the producers"
-              width={207}
-              height={207}
-            />
-            <h3 className="pt-10 pb-2">Direct from the producers</h3>
-            <p className="text-base text-white max-w-xs text-center">
-              We source the best coffees directly from producers
-            </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <Image
-              src="/assets/images/chars/roaster.svg"
-              alt="Direct from the producers"
-              width={207}
-              height={207}
-            />
-            <h3 className="pt-10 pb-2">Artisanal Roasting</h3>
-            <p className="text-base text-white max-w-xs text-center">
-              Each coffee is freshly roasted and ground for your lovely taste
-              buds
-            </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <Image
-              src="/assets/images/chars/delivery.svg"
-              alt="Direct from the producers"
-              width={207}
-              height={207}
-            />
-            <h3 className="pt-10 pb-2">Super-fast Delivery</h3>
-            <p className="text-base text-white max-w-xs text-center">
-              Our packages are shipped the day of your order and delivered
-              within 48 hours
-            </p>
-          </div>
-        </div>
-      </section>
+      <SourceToYou />
       <section>
         <div className="grid lg:grid-flow-col lg:auto-cols-[1fr] gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
           {products.map((product) => (
