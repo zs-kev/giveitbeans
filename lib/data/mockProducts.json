@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "El Paraiso",
+    "image": "/assets/images/products/elparaiso-crop.png",
+    "description": "A new batch of Colombian coffee with notes of blueberry and violets, a gourmet and sweet coffee",
+    "price": 321.87
+  },
+  {
+    "id": "2",
+    "name": "Grenadine",
+    "image": "/assets/images/products/grenadine-crop.png",
+    "description": "This special Ombligon Edition from Nestor Lasso is delightful, tasting of strawberry, cherry, raspberry, and pomegranate",
+    "price": 606.29
+  },
+  {
+    "id": "3",
+    "name": "Konga #2",
+    "image": "/assets/images/products/konga2-crop.png",
+    "description": "A fine coffee, representative of the Ethiopian terroir, with subtle notes of black tea, explosive kumquat and sweet honey",
+    "price": 250
+  }
+]

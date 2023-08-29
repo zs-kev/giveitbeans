@@ -1,5 +1,6 @@
 import ButtonPrimary from '@/components/ButtonPrimary';
 import ProductListing from '@/components/ProductListing';
+import products from '@/lib/data/mockProducts.json';
 import Image from 'next/image';
 
 const HomePage = () => {
@@ -108,10 +109,10 @@ const HomePage = () => {
         </div>
       </section>
       <section>
-        <div className="flex items-stretch justify-between flex-col lg:flex-row gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
-          <ProductListing />
-          <ProductListing />
-          <ProductListing />
+        <div className="grid lg:grid-flow-col lg:auto-cols-[1fr] gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
+          {products.map((product) => (
+            <ProductListing key={product.id} product={product} />
+          ))}
         </div>
       </section>
     </>
