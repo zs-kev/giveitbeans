@@ -2,10 +2,7 @@
 
 import ButtonPrimary from '@/components/ButtonPrimary';
 import cafes from '@/lib/data/cafes.json';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 const center = {
   lat: -26.1121,
@@ -18,7 +15,6 @@ const toRadians = (degrees: number) => {
 
 const LocationPage = () => {
   const [userLocation, setUserLocation] = useState(center);
-  L.Icon.Default.imagePath = '/assets/images/leaflet/';
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -77,24 +73,6 @@ const LocationPage = () => {
           </p>
           <ButtonPrimary link={''}>Find a cafe</ButtonPrimary>
         </div>
-        <MapContainer
-          center={[userLocation.lat, userLocation.lng]}
-          zoom={13}
-          className="h-96"
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Marker position={userLocation}>
-            <Popup>You are here</Popup>
-          </Marker>
-          {closestCafes.map((cafe) => (
-            <Marker key={cafe.id} position={[cafe.latitude, cafe.longitude]}>
-              <Popup>{cafe.name}</Popup>
-            </Marker>
-          ))}
-        </MapContainer>
       </section>
     </>
   );
