@@ -46,7 +46,7 @@ const HomePage = () => {
           variants={mainIntro}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
           className="max-w-5xl mx-auto relative z-20"
         >
           Experience a coffee for every mood
@@ -55,7 +55,7 @@ const HomePage = () => {
           variants={mainIntro}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.5, delay: 0.25 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="max-w-sm mx-auto pt-4 pb-7 lg:py-7 xl:py-9 relative z-20"
         >
           Bringing outstanding flavours to your cup. Here to make your coffee
@@ -65,7 +65,7 @@ const HomePage = () => {
           variants={mainIntro}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.85 }}
         >
           <ButtonPrimary link={'/shop'}>Shop our coffees</ButtonPrimary>
         </motion.div>
@@ -76,7 +76,7 @@ const HomePage = () => {
           }}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.5, delay: 0.85 }}
+          transition={{ duration: 0.5, delay: 1 }}
           className="relative w-full max-w-3xl aspect-[199/310] mx-auto sm:-mt-14 z-20"
         >
           <Image

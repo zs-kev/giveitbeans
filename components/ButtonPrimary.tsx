@@ -20,7 +20,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
     <Button asChild>
       <Link
         href={link}
-        className="pl-8 py-4 group ease-in-out duration-300 relative z-50"
+        className="pl-8 py-4 group ease-in-out duration-300 relative z-50 hover:text-white"
       >
         {children}
         <span className="w-14 h-14 p-3 ml-6 rounded-full bg-accent ease-in-out duration-300 group-hover:-rotate-45">

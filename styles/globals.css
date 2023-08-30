@@ -65,7 +65,7 @@
     @apply text-base md:text-lg lg:text-xl;
   }
   a {
-    @apply text-base;
+    @apply text-base hover:text-secondary ease-in-out duration-300;
   }
 
   .maxWidth {
