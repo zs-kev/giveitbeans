@@ -1,9 +1,8 @@
 'use client';
 
 import ButtonPrimary from '@/components/ButtonPrimary';
-import ProductListing from '@/components/ProductListing';
+import ListProducts from '@/components/ListProducts';
 import SourceToYou from '@/components/SourceToYou';
-import products from '@/lib/data/mockProducts.json';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
@@ -176,11 +175,7 @@ const HomePage = () => {
       </section>
       <SourceToYou />
       <section>
-        <div className="grid lg:grid-flow-col lg:auto-cols-[1fr] gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
-          {products.map((product) => (
-            <ProductListing key={product.id} product={product} />
-          ))}
-        </div>
+        <ListProducts />
       </section>
     </>
   );
