@@ -21,10 +21,19 @@ const ListProducts: FC<ListProductsProps> = () => {
       setIsLoading(true);
       const response = await fetch('/api/getProducts');
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        setError(
+          'Looks like a network issue. Please check your connection, or try again a little later.'
+        );
+        return;
       }
       const data = await response.json();
       console.log(data);
+      if (data.error) {
+        setError(
+          'There was a problem loading the products. This could be an issue on our side, please try again a little later.'
+        );
+        return;
+      }
       setProducts(data);
     } catch (error) {
       setError('error');
@@ -39,6 +48,12 @@ const ListProducts: FC<ListProductsProps> = () => {
 
   return (
     <div className="grid lg:grid-flow-col lg:auto-cols-[1fr] gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
+      {error && (
+        <div>
+          <h2>Whoops...this is not good!</h2>
+          <p>{error}</p>
+        </div>
+      )}
       {products.map((product) => (
         <div
           key={product.id}

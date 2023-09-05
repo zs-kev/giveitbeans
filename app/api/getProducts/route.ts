@@ -2,9 +2,9 @@ import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api';
 import { NextResponse } from 'next/server';
 
 const api = new WooCommerceRestApi({
-  url: 'http://give-it-beans.local/',
-  consumerKey: process.env.WOO_CONSUMER!,
-  consumerSecret: process.env.WOO_SECRET!,
+  url: 'https://giveitbeans.cloudaccess.host/',
+  consumerKey: process.env.WOO_LIVE_CONSUMER!,
+  consumerSecret: process.env.WOO_LIVE_SECRET!,
   version: 'wc/v3',
 });
 

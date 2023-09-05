@@ -13,6 +13,7 @@ interface Product {
   id: string;
   name: string;
   description: string;
+  short_description: string;
   price: number;
   images: { src: string }[];
 }
@@ -49,30 +50,32 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
   }, []);
 
   return (
-    <div className="grid lg:grid-flow-col lg:auto-cols-[1fr] gap-7 sm:gap-5 lg:gap-0 maxWidth py-16 md:py-24 lg:py-32">
+    <section className="maxWidth py-16 md:py-24 lg:py-32">
       {product && (
         <div
           key={product.id}
-          className="bg-white rounded-2xl flex flex-col items-stretch mx-3 justify-between p-10 sm:p-14 mt-24 flex-auto"
+          className="flex items-stretch justify-between mt-24 flex-auto"
         >
           <Image
             src={product.images[0].src}
             alt={product.name}
             width={286}
             height={505}
-            className="-mt-36"
+            className="w-1/2"
           />
-          <h2>{product.name}</h2>
-          <p className="text-base">{stripHtml(product.description)}</p>
-          <div className="flex items-end justify-between flex-wrap pt-12">
-            <p className="font-Guy text-4xl text-primary">R{product.price}</p>
-            <ButtonPrimary link={`/product/${product.id}`}>
-              Buy now
-            </ButtonPrimary>
+          <div className="bg-white rounded-2xl p-10 sm:p-14 w-1/2">
+            <h2>{product.name}</h2>
+            <p className="text-base">{stripHtml(product.short_description)}</p>
+            <div className="flex items-end justify-between flex-wrap pt-12">
+              <p className="font-Guy text-4xl text-primary">R{product.price}</p>
+              <ButtonPrimary link={`/product/${product.id}`}>
+                Add to Cart
+              </ButtonPrimary>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
