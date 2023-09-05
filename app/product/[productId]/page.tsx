@@ -52,7 +52,6 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log(data);
         setProduct(data);
 
         // Set the variation to the first option on initialization if the variations exist
@@ -85,6 +84,15 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
 
   return (
     <section className="maxWidth py-16">
+      {error && (
+        <div>
+          <h2>Whoops! Looks like a bad extraction.</h2>
+          <p>
+            Seems like something went wrong when trying to fetch the product you
+            are looking for. please try again a little later.
+          </p>
+        </div>
+      )}
       {isLoading && (
         <div>
           <h2>Loading...</h2>
@@ -110,7 +118,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
               <p className="pb-14 pt-7">
                 {stripHtml(product.short_description)}
               </p>
-              <div>
+              <div className="grid grid-cols-2 gap-6 pb-14">
                 {product.attributes &&
                   product.attributes.map(
                     (attribute, index) =>
