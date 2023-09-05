@@ -51,6 +51,12 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
 
   return (
     <section className="maxWidth py-16 md:py-24 lg:py-32">
+      {isLoading && (
+        <div>
+          <h2>Loading...</h2>
+          <p>Brewing a good cup of coffee takes time.</p>
+        </div>
+      )}
       {product && (
         <div
           key={product.id}

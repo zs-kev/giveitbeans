@@ -54,6 +54,12 @@ const ListProducts: FC<ListProductsProps> = () => {
           <p>{error}</p>
         </div>
       )}
+      {isLoading && (
+        <div>
+          <h2>Loading...</h2>
+          <p>Brewing a good cup of coffee takes time.</p>
+        </div>
+      )}
       {products.map((product) => (
         <div
           key={product.id}
