@@ -103,9 +103,9 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
         <>
           <div
             key={product.id}
-            className="flex items-stretch gap-28 justify-between flex-auto"
+            className="flex flex-col lg:flex-row items-stretch gap-28 justify-between flex-auto"
           >
-            <div className="bg-white rounded-2xl flex items-center justify-center w-1/2 p-10">
+            <div className="bg-white rounded-2xl flex items-center justify-center lg:w-1/2 p-10">
               <Image
                 src={product.images[0].src}
                 alt={product.name}
@@ -113,7 +113,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                 height={505}
               />
             </div>
-            <div className="w-1/2">
+            <div className="lg:w-1/2">
               <h1 className="text-left">{product.name}</h1>
               <p className="pb-14 pt-7">
                 {stripHtml(product.short_description)}
