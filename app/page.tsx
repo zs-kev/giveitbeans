@@ -22,8 +22,6 @@ const backgroundIntroRight = {
   visible: { x: '0%' },
 };
 
-export const revalidate = 60; //Revalidate the page every 60s
-
 const HomePage = () => {
   const ref = useRef(null);
 

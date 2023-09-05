@@ -11,6 +11,8 @@ const stripHtml = (html: string) => {
 
 interface ListProductsProps {}
 
+export const revalidate = 60; //Revalidate the page every 60s
+
 const ListProducts: FC<ListProductsProps> = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
