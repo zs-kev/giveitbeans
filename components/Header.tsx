@@ -21,7 +21,7 @@ const iconPages: { page: string; path: string; icon: ReactNode }[] = [
   },
   {
     page: 'Store Locator',
-    path: '/store-locator',
+    path: '/location',
     icon: <MapPinIcon className="w-4" />,
   },
 ];

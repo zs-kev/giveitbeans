@@ -71,4 +71,27 @@
   .maxWidth {
     @apply max-w-screen-2xl mx-6 md:mx-8 2xl:mx-auto;
   }
+
+  /* Styles for woo product descriptions */
+  .woo_description div,
+  .woo_description p,
+  .woo_description li {
+    @apply text-base md:text-lg lg:text-xl text-muted font-Zilla;
+  }
+
+  .woo_description h4 {
+    @apply font-Guy py-3;
+  }
+
+  .woo_description p {
+    @apply py-2.5;
+  }
+
+  .woo_description ol {
+    @apply list-decimal list-inside;
+  }
+
+  .woo_description li {
+    @apply py-1;
+  }
 }

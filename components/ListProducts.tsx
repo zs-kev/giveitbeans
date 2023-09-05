@@ -77,7 +77,7 @@ const ListProducts: FC<ListProductsProps> = () => {
           <div className="flex items-end justify-between flex-wrap pt-12">
             <p className="font-Guy text-4xl text-primary">R{product.price}</p>
             <ButtonPrimary link={`/product/${product.id}`}>
-              Buy now
+              Select options
             </ButtonPrimary>
           </div>
         </div>
