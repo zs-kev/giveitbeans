@@ -36,6 +36,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
   );
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -137,7 +138,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
               {product && product.variationDetails && (
                 <div className="pt-14">
                   <h3>Weight:</h3>
-                  <div className="flex gap-4">
+                  <div className="flex gap-2.5">
                     {product.variationDetails.map((variation) => (
                       <div key={variation.id} className="cursor-pointer mt-4">
                         <input
@@ -151,7 +152,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                         />
                         <label
                           htmlFor={String(variation.id)}
-                          className="cursor-pointer border-primary border-[1px] rounded-full px-8 py-4 peer-checked:bg-primary ease-in-out duration-300 peer-checked:text-white hover:bg-muted hover:text-white"
+                          className="cursor-pointer border-primary border-[1px] rounded-full px-8 py-4 peer-checked:bg-secondary peer-checked:border-secondary ease-in-out duration-300 peer-checked:text-white hover:bg-muted hover:text-white"
                         >
                           {variation.attributes[0].option.replace(/['"]+/g, '')}
                         </label>
@@ -164,7 +165,14 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                 <p className="font-Guy text-4xl text-primary">
                   R{product.price}
                 </p>
-                <div className="flex">
+                <div className="flex justify-between">
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    min="1"
+                    className="text-center w-24 border-primary border-[1px] rounded-full bg-transparent font-Zilla text-primary focus:border-secondary"
+                  />
                   <ButtonPrimary link="">Add to Cart</ButtonPrimary>
                 </div>
               </div>
