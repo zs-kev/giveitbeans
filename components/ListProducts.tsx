@@ -29,7 +29,6 @@ const ListProducts: FC<ListProductsProps> = () => {
         return;
       }
       const data = await response.json();
-      console.log(data);
       if (data.error) {
         setError(
           'There was a problem loading the products. This could be an issue on our side, please try again a little later.'

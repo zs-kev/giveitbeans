@@ -134,12 +134,12 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                   )}
               </div>
               <hr className="w-full border-primary" />
-              <div className="flex items-end justify-between flex-wrap pt-12 pb-14">
-                {product && product.variationDetails && (
-                  <div>
-                    <label>Weight:</label>
+              {product && product.variationDetails && (
+                <div className="pt-14">
+                  <h3>Weight:</h3>
+                  <div className="flex gap-4">
                     {product.variationDetails.map((variation) => (
-                      <div key={variation.id}>
+                      <div key={variation.id} className="cursor-pointer mt-4">
                         <input
                           type="radio"
                           id={String(variation.id)}
@@ -147,18 +147,26 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                           value={variation.id}
                           checked={selectedVariation === variation.id}
                           onChange={() => handleVariationChange(variation.id)}
+                          className="opacity-0 absolute peer"
                         />
-                        <label htmlFor={String(variation.id)}>
-                          {variation.attributes.map((a: any) => a.option)}
+                        <label
+                          htmlFor={String(variation.id)}
+                          className="cursor-pointer border-primary border-[1px] rounded-full px-8 py-4 peer-checked:bg-primary ease-in-out duration-300 peer-checked:text-white hover:bg-muted hover:text-white"
+                        >
+                          {variation.attributes[0].option.replace(/['"]+/g, '')}
                         </label>
                       </div>
                     ))}
                   </div>
-                )}
+                </div>
+              )}
+              <div className="pt-12 pb-14">
                 <p className="font-Guy text-4xl text-primary">
                   R{product.price}
                 </p>
-                <ButtonPrimary link="">Add to Cart</ButtonPrimary>
+                <div className="flex">
+                  <ButtonPrimary link="">Add to Cart</ButtonPrimary>
+                </div>
               </div>
               <hr className="w-full border-primary" />
             </div>
