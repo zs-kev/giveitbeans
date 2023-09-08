@@ -1,9 +1,9 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { CartProvider } from '@/context/CartContext';
 import '@/styles/global-reset.css';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'Give It Beans',
@@ -16,14 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <CartProvider>
-      <html lang="en">
-        <body className="bg-lightpattern">
+    <html lang="en">
+      <body className="bg-lightpattern">
+        <Providers>
           <Header />
           <main>{children}</main>
           <Footer />
-        </body>
-      </html>
-    </CartProvider>
+        </Providers>
+      </body>
+    </html>
   );
 }

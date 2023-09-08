@@ -98,6 +98,7 @@ const HomePage = () => {
             alt="Latte Art"
             width={387}
             height={376}
+            priority
           />
         </motion.div>
         <motion.div
@@ -113,6 +114,7 @@ const HomePage = () => {
             alt="Latte Art"
             width={386}
             height={588}
+            priority
           />
         </motion.div>
         <motion.div
@@ -132,6 +134,7 @@ const HomePage = () => {
             width={403}
             height={404}
             className="-rotate-90"
+            priority
           />
         </motion.div>
         <motion.div
@@ -159,6 +162,7 @@ const HomePage = () => {
             alt="Latte Art"
             width={305}
             height={588}
+            priority
           />
         </motion.div>
         <motion.div

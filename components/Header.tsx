@@ -46,6 +46,7 @@ function Header() {
             alt="Give it beans"
             width={207}
             height={37}
+            priority
           />
         </Link>
         <div className="hidden sm:flex items-center gap-10">
