@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import { CartProvider } from '@/context/CartContext';
 import '@/styles/global-reset.css';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
@@ -15,12 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-lightpattern">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <CartProvider>
+      <html lang="en">
+        <body className="bg-lightpattern">
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </CartProvider>
   );
 }
