@@ -156,7 +156,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
               <hr className="w-full border-primary" />
               {product && product.variationDetails && (
                 <div className="pt-14">
-                  P<h3>Weight:</h3>
+                  <h3>Weight:</h3>
                   <div className="flex gap-2.5">
                     {product.variationDetails.map((variation) => (
                       <div key={variation.id} className="cursor-pointer mt-4">
