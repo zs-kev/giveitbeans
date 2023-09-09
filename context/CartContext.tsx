@@ -2,15 +2,26 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+export interface EssentialProductInfo {
+  id: string | number;
+  price: number;
+  image: string;
+  name: string;
+}
+
 interface CartItem {
-  product: any;
+  productInfo: EssentialProductInfo;
   quantity: number;
   variationId: number;
 }
 
 interface CartContextProps {
   cart: CartItem[];
-  addToCart: (product: any, quantity: number, variationId: number) => void;
+  addToCart: (
+    product: EssentialProductInfo,
+    quantity: number,
+    variationId: number
+  ) => void;
 }
 
 interface CartProviderProps {
@@ -42,15 +53,22 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product: any, quantity: number, variationId: number) => {
+    const essentialProductInfo = {
+      id: product.id,
+      price: product.price,
+      image: product.image,
+      name: product.name,
+    };
+
     const newCartItem = {
-      product,
+      productInfo: essentialProductInfo,
       quantity,
       variationId,
     };
 
     const existingCartItemIndex = cart.findIndex(
       (item) =>
-        item.product.id === product.id && item.variationId === variationId
+        item.productInfo.id === product.id && item.variationId === variationId
     );
 
     if (existingCartItemIndex >= 0) {

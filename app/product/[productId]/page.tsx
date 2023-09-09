@@ -1,6 +1,6 @@
 'use client';
 
-import ButtonPrimary from '@/components/ButtonPrimary';
+import { EssentialProductInfo, useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -37,6 +37,8 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
     null
   );
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -80,6 +82,23 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
         ...product!,
         price: newSelectedVariation.price,
       });
+    }
+  };
+  const handleAddToCart = () => {
+    if (product) {
+      const essentialProductInfo: EssentialProductInfo = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0].src, // Assuming your Product object has an image field. Adjust accordingly.
+      };
+
+      // Assuming the first variation is selected by default.
+      const variationId =
+        selectedVariation ||
+        (product.variationDetails && product.variationDetails[0]?.id) ||
+        0;
+      addToCart(essentialProductInfo, quantity, variationId);
     }
   };
 
@@ -137,7 +156,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
               <hr className="w-full border-primary" />
               {product && product.variationDetails && (
                 <div className="pt-14">
-                  <h3>Weight:</h3>
+                  P<h3>Weight:</h3>
                   <div className="flex gap-2.5">
                     {product.variationDetails.map((variation) => (
                       <div key={variation.id} className="cursor-pointer mt-4">
@@ -173,7 +192,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                     min="1"
                     className="text-center w-24 border-primary border-[1px] rounded-full bg-transparent font-Zilla text-primary focus:border-secondary"
                   />
-                  <ButtonPrimary link="">Add to Cart</ButtonPrimary>
+                  <button onClick={handleAddToCart}>Add to Cart</button>
                 </div>
               </div>
               <hr className="w-full border-primary" />

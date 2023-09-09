@@ -1,5 +1,6 @@
 'use client';
 
+import { useCart } from '@/context/CartContext';
 import { MapPinIcon, ShoppingCartIcon } from '@heroicons/react/20/solid';
 import {
   NavbarMenu,
@@ -11,6 +12,9 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@nextui-org/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -43,8 +47,10 @@ const iconPages: {
 ];
 
 function Header() {
+  const { cart } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const currentRoute = usePathname();
+  console.log(cart);
   return (
     //   <header>
     //     <motion.nav
@@ -88,11 +94,7 @@ function Header() {
     //     </motion.nav>
     //   </header>
     // );
-    <Navbar
-      onMenuOpenChange={setIsMenuOpen}
-      position="static"
-      className="py-6 z-50 bg-lightpattern"
-    >
+    <Navbar position="static" className="py-6 z-50 bg-lightpattern">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -119,17 +121,91 @@ function Header() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        {iconPages.map(({ page, path, icon, customClass }) => (
-          <NavbarItem key={page}>
-            <Link
-              href={path}
-              className={`text-primary flex items-center gap-2 ${customClass}`}
-            >
-              {icon}
-              {page}
-            </Link>
-          </NavbarItem>
-        ))}
+        <NavbarItem>
+          <Popover placement="bottom" showArrow offset={10}>
+            <PopoverTrigger>
+              <button className="text-primary flex items-center gap-2">
+                <ShoppingCartIcon className="w-4" />
+                Cart
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit">
+              {(titleProps) => (
+                <div className="px-1 py-2 w-full">
+                  <p
+                    className="text-small font-bold text-foreground"
+                    {...titleProps}
+                  >
+                    In your brew cart
+                  </p>
+                  <div className="mt-2 flex flex-col gap-2 w-full">
+                    {cart.length > 0 ? (
+                      <>
+                        {cart.map((item) => (
+                          <div
+                            key={item.productInfo.name}
+                            className="flex items-center"
+                          >
+                            <Image
+                              src={item.productInfo.image}
+                              width={86}
+                              height={305}
+                              alt={item.productInfo.name}
+                            />
+                            <div className="pr-6">
+                              <p>{item.productInfo.name}</p>
+                              <p>R{item.productInfo.price}</p>
+                              <button>Remove</button>
+                            </div>
+                            <p>x{item.quantity}</p>
+                          </div>
+                        ))}
+                        <div>
+                          <Link href="/checkout">Checkout</Link>
+                        </div>
+                      </>
+                    ) : (
+                      <div>Your cart is empty.</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </PopoverContent>
+          </Popover>
+          {/* <Dropdown>
+            <DropdownTrigger>
+              <button className="text-primary flex items-center gap-2">
+                <ShoppingCartIcon className="w-4" />
+                Cart
+              </button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              {cart.length > 0 ? (
+                <>
+                  {cart.map((item) => (
+                    <DropdownItem key={item.productInfo.name}>
+                      {item.productInfo.name} - {item.quantity}
+                    </DropdownItem>
+                  ))}
+                  <DropdownItem>
+                    <Link href="/checkout">Checkout</Link>
+                  </DropdownItem>
+                </>
+              ) : (
+                <DropdownItem>Your cart is empty.</DropdownItem>
+              )}
+            </DropdownMenu>
+          </Dropdown> */}
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            href="/location"
+            className="text-primary items-center gap-2 hidden md:flex"
+          >
+            <MapPinIcon className="w-4" />
+            Store Locator
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       <NavbarMenu className="mt-6 bg-lightpattern">
         {mainPages.map(({ page, path }) => (
