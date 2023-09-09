@@ -23,7 +23,12 @@ const mainPages: { page: string; path: string }[] = [
   { page: 'Conact', path: '/contact' },
 ];
 
-const iconPages: { page: string; path: string; icon: ReactNode }[] = [
+const iconPages: {
+  page: string;
+  path: string;
+  icon: ReactNode;
+  customClass?: string;
+}[] = [
   {
     page: 'Cart',
     path: '/cart',
@@ -33,6 +38,7 @@ const iconPages: { page: string; path: string; icon: ReactNode }[] = [
     page: 'Store Locator',
     path: '/location',
     icon: <MapPinIcon className="w-4" />,
+    customClass: 'hidden md:flex',
   },
 ];
 
@@ -84,13 +90,13 @@ function Header() {
     // );
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
-      shouldHideOnScroll
-      className="sm:py-6 z-50"
+      position="static"
+      className="py-6 z-50 bg-lightpattern"
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
+          className="md:hidden"
         />
         <NavbarBrand>
           <Link href={'/'}>
@@ -105,7 +111,7 @@ function Header() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden md:flex gap-4" justify="center">
         {mainPages.map(({ page, path }) => (
           <NavbarItem key={page}>
             <Link href={path}>{page}</Link>
@@ -113,21 +119,27 @@ function Header() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        {iconPages.map(({ page, path, icon }) => (
+        {iconPages.map(({ page, path, icon, customClass }) => (
           <NavbarItem key={page}>
-            <Link href={path} className="text-primary flex items-center gap-2">
+            <Link
+              href={path}
+              className={`text-primary flex items-center gap-2 ${customClass}`}
+            >
               {icon}
               {page}
             </Link>
           </NavbarItem>
         ))}
       </NavbarContent>
-      <NavbarMenu>
+      <NavbarMenu className="mt-6 bg-lightpattern">
         {mainPages.map(({ page, path }) => (
           <NavbarMenuItem key={page}>
             <Link href={path}>{page}</Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          <Link href={iconPages[1].path}>{iconPages[1].page}</Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
