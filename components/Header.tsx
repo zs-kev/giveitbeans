@@ -50,7 +50,7 @@ function Header() {
   const { cart } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const currentRoute = usePathname();
-  console.log(cart);
+
   return (
     //   <header>
     //     <motion.nav

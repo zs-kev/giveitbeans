@@ -10,6 +10,9 @@ const CheckoutPage = () => {
   const [isGuest, setIsGuest] = useState(false);
   const [guestEmail, setGuestEmail] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [isLogginOut, setIsLogginOut] = useState(false);
 
   const emailError = formSubmitted && !guestEmail ? 'invalid' : 'valid';
 
@@ -21,6 +24,14 @@ const CheckoutPage = () => {
 
     return validateEmail(guestEmail) ? 'valid' : 'invalid';
   }, [guestEmail]);
+
+  const handleSignOut = () => {
+    setIsLogginOut(true);
+    localStorage.removeItem('jwt_token');
+    setIsUserLoggedIn(false);
+    setUserEmail('');
+    setIsLogginOut(false);
+  };
 
   return (
     <section className="md:pt-6 lg:pt-10 xl:pt-14 text-left px-6 md:px-8 lg:px-0 maxWidth">
@@ -57,17 +68,44 @@ const CheckoutPage = () => {
             </>
           ) : (
             <>
-              {showLogin ? <Login /> : <Signup />}
-              {showLogin ? (
-                <p>
-                  Dont have an account?{' '}
-                  <button onClick={() => setShowLogin(false)}>Sign Up</button>
-                </p>
+              {isUserLoggedIn ? (
+                <>
+                  <p>Welcome back! You are now logged in as {userEmail}</p>
+                  <p>
+                    Not you? <button onClick={handleSignOut}>Sign Out</button>
+                  </p>
+                </>
               ) : (
-                <p>
-                  Already have an account?{' '}
-                  <button onClick={() => setShowLogin(true)}>Login</button>
-                </p>
+                <>
+                  {showLogin ? (
+                    <Login
+                      onUserLogin={(email) => {
+                        setIsUserLoggedIn(true);
+                        setUserEmail(email); // <-- Set the user email on successful login
+                      }}
+                    />
+                  ) : (
+                    <Signup
+                      onUserRegistered={(email) => {
+                        setIsUserLoggedIn(true);
+                        setUserEmail(email); // <-- Set the user email on successful sign-up
+                      }}
+                    />
+                  )}
+                  {showLogin ? (
+                    <p>
+                      Dont have an account?
+                      <button onClick={() => setShowLogin(false)}>
+                        Sign Up
+                      </button>
+                    </p>
+                  ) : (
+                    <p>
+                      Already have an account?
+                      <button onClick={() => setShowLogin(true)}>Login</button>
+                    </p>
+                  )}
+                </>
               )}
             </>
           )}
