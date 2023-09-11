@@ -4,9 +4,14 @@ import ListProducts from '@/components/ListProducts';
 
 const ShopPage = () => {
   return (
-    <section>
-      <ListProducts />
-    </section>
+    <>
+      <section>
+        <h1>Shop</h1>
+      </section>
+      <section>
+        <ListProducts />
+      </section>
+    </>
   );
 };
 

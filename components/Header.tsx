@@ -22,7 +22,7 @@ import { ReactNode, useState } from 'react';
 
 const mainPages: { page: string; path: string }[] = [
   { page: 'Shop', path: '/shop' },
-  { page: 'Subscription', path: '/subscription' },
+  // { page: 'Subscription', path: '/subscription' },
   { page: 'Learn', path: '/learn' },
   { page: 'Conact', path: '/contact' },
 ];
@@ -122,7 +122,7 @@ function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Popover placement="bottom" showArrow offset={10}>
+          <Popover placement="bottom" showArrow offset={10} shouldCloseOnBlur>
             <PopoverTrigger>
               <button className="text-primary flex items-center gap-2">
                 <ShoppingCartIcon className="w-4" />
@@ -154,12 +154,13 @@ function Header() {
                             />
                             <div className="pr-6">
                               <p>{item.productInfo.name}</p>
-                              <p>R{item.productInfo.price}</p>
+                              <p>R{item.productInfo.price * item.quantity}</p>
                               <button>Remove</button>
                             </div>
                             <p>x{item.quantity}</p>
                           </div>
                         ))}
+
                         <div>
                           <Link href="/checkout">Checkout</Link>
                         </div>
