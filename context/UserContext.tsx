@@ -6,7 +6,7 @@ interface UserProviderProps {
   children: React.ReactNode;
 }
 
-const UserContext = createContext({
+export const UserContext = createContext({
   isUserLoggedIn: false,
   loginUser: () => {},
   logoutUser: () => {},
@@ -22,7 +22,33 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const token = localStorage.getItem('jwt_token');
     if (token) {
       setIsUserLoggedIn(true);
-      // Optionally fetch user data here if required using the token
+
+      // Fetch user data using the token
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch(
+            'https://giveitbeans.cloudaccess.host/wp-json/wp/v2/users/me',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+          }
+
+          const data = await response.json();
+
+          setCurrentUserEmail(data.email);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchUserData();
     }
   }, []);
 

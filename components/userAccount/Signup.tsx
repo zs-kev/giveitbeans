@@ -1,8 +1,9 @@
 'use client';
 
+import { UserContext } from '@/context/UserContext';
 import { Input } from '@nextui-org/react';
 import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { EyeFilledIcon } from '../icons/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '../icons/EyeSlashFilledIcon';
 
@@ -20,7 +21,8 @@ const Signup: React.FC<SignupProps> = (props) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState();
+
+  const { loginUser, setCurrentUserEmail } = useContext(UserContext);
 
   const handleSignup = (event: any) => {
     event.preventDefault();
@@ -70,9 +72,8 @@ const Signup: React.FC<SignupProps> = (props) => {
             .then((data) => {
               if (data && data.token) {
                 localStorage.setItem('jwt_token', data.token);
-                if (props.onUserRegistered) {
-                  props.onUserRegistered(email);
-                }
+                loginUser();
+                setCurrentUserEmail(email);
                 setIsLoading(false);
               } else if (data && data.message) {
                 setError(data.message);

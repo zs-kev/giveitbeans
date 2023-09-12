@@ -1,7 +1,8 @@
 'use client';
 
+import { UserContext } from '@/context/UserContext';
 import { Input } from '@nextui-org/react';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { EyeFilledIcon } from '../icons/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '../icons/EyeSlashFilledIcon';
 
@@ -16,6 +17,8 @@ const Login: React.FC<LoginProps> = (props) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const { loginUser, setCurrentUserEmail } = useContext(UserContext);
 
   const handleLogin = async () => {
     setFormSubmitted(true);
@@ -42,13 +45,10 @@ const Login: React.FC<LoginProps> = (props) => {
         if (data.token) {
           // Token received, user logged in
           localStorage.setItem('jwt_token', data.token);
-
-          if (props.onUserLogin) {
-            props.onUserLogin(email);
-          }
+          loginUser();
+          setCurrentUserEmail(email);
         } else if (data.code) {
           // Handle login error.
-          // The error message will typically be in `data.message`
           setError(data.message);
         }
       } catch (error) {

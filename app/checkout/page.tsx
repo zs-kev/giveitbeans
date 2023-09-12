@@ -2,17 +2,23 @@
 
 import Login from '@/components/userAccount/Login';
 import Signup from '@/components/userAccount/Signup';
+import { UserContext } from '@/context/UserContext';
 import { Input } from '@nextui-org/react';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 const CheckoutPage = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
   const [guestEmail, setGuestEmail] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-  const [isLogginOut, setIsLogginOut] = useState(false);
+
+  const {
+    isUserLoggedIn,
+    loginUser,
+    logoutUser,
+    currentUserEmail,
+    setCurrentUserEmail,
+  } = useContext(UserContext);
 
   const emailError = formSubmitted && !guestEmail ? 'invalid' : 'valid';
 
@@ -26,11 +32,8 @@ const CheckoutPage = () => {
   }, [guestEmail]);
 
   const handleSignOut = () => {
-    setIsLogginOut(true);
-    localStorage.removeItem('jwt_token');
-    setIsUserLoggedIn(false);
-    setUserEmail('');
-    setIsLogginOut(false);
+    logoutUser();
+    setCurrentUserEmail('');
   };
 
   return (
@@ -70,7 +73,9 @@ const CheckoutPage = () => {
             <>
               {isUserLoggedIn ? (
                 <>
-                  <p>Welcome back! You are now logged in as {userEmail}</p>
+                  <p>
+                    Welcome back! You are now logged in as {currentUserEmail}
+                  </p>
                   <p>
                     Not you? <button onClick={handleSignOut}>Sign Out</button>
                   </p>
@@ -80,15 +85,15 @@ const CheckoutPage = () => {
                   {showLogin ? (
                     <Login
                       onUserLogin={(email) => {
-                        setIsUserLoggedIn(true);
-                        setUserEmail(email); // <-- Set the user email on successful login
+                        loginUser();
+                        setCurrentUserEmail(email); // <-- Set the user email on successful login
                       }}
                     />
                   ) : (
                     <Signup
                       onUserRegistered={(email) => {
-                        setIsUserLoggedIn(true);
-                        setUserEmail(email); // <-- Set the user email on successful sign-up
+                        loginUser();
+                        setCurrentUserEmail(email); // <-- Set the user email on successful sign-up
                       }}
                     />
                   )}
