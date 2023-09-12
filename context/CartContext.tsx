@@ -22,6 +22,7 @@ export interface CartContextProps {
     quantity: number,
     variationId: number
   ) => void;
+  cartTotal: number;
 }
 
 interface CartProviderProps {
@@ -40,6 +41,19 @@ export const useCart = () => {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartTotal, setCartTotal] = useState<number>(0);
+
+  const calculateSubTotal = () => {
+    return cart.reduce(
+      (acc, item) => acc + item.productInfo.price * item.quantity,
+      0
+    );
+  };
+
+  useEffect(() => {
+    const total = calculateSubTotal();
+    setCartTotal(total);
+  }, [cart]);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -81,7 +95,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, cartTotal }}>
       {children}
     </CartContext.Provider>
   );

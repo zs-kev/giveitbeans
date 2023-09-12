@@ -1,4 +1,4 @@
-import { CartItem } from '@/context/CartContext';
+import { CartItem, useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { FC } from 'react';
 
@@ -8,16 +8,10 @@ interface OrderSummeryProps {
 }
 
 const OrderSummery: FC<OrderSummeryProps> = ({ cartItems, shippingCost }) => {
-  const calculateSubTotal = () => {
-    return cartItems.reduce(
-      (acc, item) => acc + item.productInfo.price * item.quantity,
-      0
-    );
-  };
+  const { cartTotal } = useCart();
 
-  const subtotal = calculateSubTotal();
-  const vat = subtotal * 0.15;
-  const total = subtotal + shippingCost;
+  const vat = cartTotal * 0.15;
+  const total = cartTotal + shippingCost;
 
   return (
     <div>
@@ -43,7 +37,7 @@ const OrderSummery: FC<OrderSummeryProps> = ({ cartItems, shippingCost }) => {
             <div>
               <div>
                 <p>Subtotal:</p>
-                <p>R{subtotal}</p>
+                <p>R{cartTotal}</p>
               </div>
               <div>
                 <p>VAT (15%):</p>

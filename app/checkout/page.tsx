@@ -1,6 +1,7 @@
 'use client';
 
-import OrderSummery from '@/components/OrderSummery';
+import OrderSummery from '@/components/checkout/OrderSummery';
+import ShippingMethods from '@/components/checkout/ShippingMethods';
 import Login from '@/components/userAccount/Login';
 import Signup from '@/components/userAccount/Signup';
 import { useCart } from '@/context/CartContext';
@@ -13,6 +14,7 @@ const CheckoutPage = () => {
   const [isGuest, setIsGuest] = useState(false);
   const [guestEmail, setGuestEmail] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [shippingCost, setShippingCost] = useState(0);
 
   const {
     isUserLoggedIn,
@@ -126,7 +128,8 @@ const CheckoutPage = () => {
           <label>Checkout as Guest</label>
         </div>
       </div>
-      <OrderSummery cartItems={cart} shippingCost={0} />
+      <ShippingMethods setShippingCost={setShippingCost} />
+      <OrderSummery cartItems={cart} shippingCost={shippingCost} />
     </section>
   );
 };
