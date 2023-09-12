@@ -1,7 +1,9 @@
 'use client';
 
+import OrderSummery from '@/components/OrderSummery';
 import Login from '@/components/userAccount/Login';
 import Signup from '@/components/userAccount/Signup';
+import { useCart } from '@/context/CartContext';
 import { UserContext } from '@/context/UserContext';
 import { Input } from '@nextui-org/react';
 import { useContext, useMemo, useState } from 'react';
@@ -19,6 +21,8 @@ const CheckoutPage = () => {
     currentUserEmail,
     setCurrentUserEmail,
   } = useContext(UserContext);
+
+  const { cart } = useCart();
 
   const emailError = formSubmitted && !guestEmail ? 'invalid' : 'valid';
 
@@ -122,6 +126,7 @@ const CheckoutPage = () => {
           <label>Checkout as Guest</label>
         </div>
       </div>
+      <OrderSummery cartItems={cart} shippingCost={0} />
     </section>
   );
 };

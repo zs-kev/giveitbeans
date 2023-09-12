@@ -9,13 +9,13 @@ export interface EssentialProductInfo {
   name: string;
 }
 
-interface CartItem {
+export interface CartItem {
   productInfo: EssentialProductInfo;
   quantity: number;
   variationId: number;
 }
 
-interface CartContextProps {
+export interface CartContextProps {
   cart: CartItem[];
   addToCart: (
     product: EssentialProductInfo,

@@ -20,7 +20,8 @@ const Login: React.FC<LoginProps> = (props) => {
 
   const { loginUser, setCurrentUserEmail } = useContext(UserContext);
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: any) => {
+    event.preventDefault();
     setFormSubmitted(true);
     setIsLoading(true);
 
@@ -77,12 +78,13 @@ const Login: React.FC<LoginProps> = (props) => {
   }, [email]);
 
   return (
-    <div>
+    <form onSubmit={handleLogin}>
       <Input
         isRequired
         variant="bordered"
         labelPlacement="outside"
         isClearable
+        autoComplete="email"
         type="email"
         label="Email"
         placeholder="Enter your email"
@@ -107,6 +109,7 @@ const Login: React.FC<LoginProps> = (props) => {
         type={isVisible ? 'text' : 'password'}
         label="Password"
         placeholder="Enter your password"
+        autoComplete="current-password"
         value={password}
         onValueChange={setPassword}
         color={passwordError === 'invalid' ? 'danger' : undefined}
@@ -125,8 +128,8 @@ const Login: React.FC<LoginProps> = (props) => {
           </button>
         }
       />
-      <button onClick={handleLogin}>Login</button>
-    </div>
+      <button type="submit">Login</button>
+    </form>
   );
 };
 

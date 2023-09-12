@@ -171,6 +171,7 @@ const Signup: React.FC<SignupProps> = (props) => {
             type="email"
             label="Email"
             placeholder="Enter your email"
+            autoComplete="email"
             value={email}
             color={
               validationState === 'invalid' || emailError === 'invalid'
@@ -190,6 +191,7 @@ const Signup: React.FC<SignupProps> = (props) => {
             type={isVisible ? 'text' : 'password'}
             label="Password"
             placeholder="Enter your password"
+            autoComplete="new-password"
             value={password}
             onValueChange={setPassword}
             color={passwordError === 'invalid' ? 'danger' : undefined}
@@ -217,6 +219,7 @@ const Signup: React.FC<SignupProps> = (props) => {
             type={isVisible ? 'text' : 'password'}
             label="Confirm Password"
             placeholder="Enter your password"
+            autoComplete="new-password"
             value={confirmPassword}
             onValueChange={setConfirmPassword}
             color={
