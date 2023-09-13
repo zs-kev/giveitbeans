@@ -2,6 +2,7 @@
 
 import BillingAddress from '@/components/checkout/BilllingAddress';
 import OrderSummery from '@/components/checkout/OrderSummery';
+import PaymentOptions from '@/components/checkout/PaymentOptions';
 import ShippingAddress from '@/components/checkout/ShippingAddress';
 import ShippingMethods from '@/components/checkout/ShippingMethods';
 import Login from '@/components/userAccount/Login';
@@ -9,7 +10,7 @@ import Signup from '@/components/userAccount/Signup';
 import { useCart } from '@/context/CartContext';
 import { UserContext } from '@/context/UserContext';
 import { defaultAddress } from '@/lib/utils/addressConstraints';
-import { Checkbox, Divider, Input } from '@nextui-org/react';
+import { Button, Checkbox, Divider, Input } from '@nextui-org/react';
 import { useContext, useMemo, useState } from 'react';
 
 const CheckoutPage = () => {
@@ -20,6 +21,7 @@ const CheckoutPage = () => {
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingAddress, setShippingAddress] = useState(defaultAddress);
   const [billingAddress, setBillingAddress] = useState(defaultAddress);
+  const [paymentOption, setPaymentOption] = useState(0);
 
   const {
     isUserLoggedIn,
@@ -46,6 +48,11 @@ const CheckoutPage = () => {
     logoutUser();
     setCurrentUserEmail('');
   };
+
+  console.log(shippingCost);
+  console.log(shippingAddress);
+  console.log(billingAddress);
+  console.log(paymentOption);
 
   return (
     <section className="md:pt-6 lg:pt-10 xl:pt-14 text-left px-6 md:px-8 lg:px-0 maxWidth">
@@ -164,8 +171,16 @@ const CheckoutPage = () => {
             />
           </div>
         </div>
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 p-10 sm:p-14 flex flex-col gap-5">
           <OrderSummery cartItems={cart} shippingCost={shippingCost} />
+          <PaymentOptions setPaymentOption={setPaymentOption} />
+          <Button
+            radius="full"
+            fullWidth
+            className="bg-secondary text-white font-Zilla text-base hover:bg-accent"
+          >
+            Pay Now
+          </Button>
         </div>
       </div>
     </section>

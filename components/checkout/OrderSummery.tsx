@@ -15,14 +15,14 @@ const OrderSummery: FC<OrderSummeryProps> = ({ cartItems, shippingCost }) => {
   const total = cartTotal + shippingCost;
 
   return (
-    <div className="p-10 sm:p-14">
+    <div>
       <h2 className="pb-5">Order Summery</h2>
       <div>
         {cartItems.length > 0 ? (
           <>
-            {cartItems.map((item) => (
+            {cartItems.map((item, index) => (
               <div
-                key={item.productInfo.name}
+                key={`${item.productInfo.name}-${index}`}
                 className="flex items-start gap-4"
               >
                 <Image
