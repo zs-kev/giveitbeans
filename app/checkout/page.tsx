@@ -19,6 +19,7 @@ const CheckoutPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingAddress, setShippingAddress] = useState(defaultAddress);
+  const [billingAddress, setBillingAddress] = useState(defaultAddress);
 
   const {
     isUserLoggedIn,
@@ -157,7 +158,10 @@ const CheckoutPage = () => {
           </div>
           <Divider />
           <div>
-            <BillingAddress shippingAddress={shippingAddress} />
+            <BillingAddress
+              shippingAddress={shippingAddress}
+              onBillingAddressChange={setBillingAddress}
+            />
           </div>
         </div>
         <div className="md:w-1/2">

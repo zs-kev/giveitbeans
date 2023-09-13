@@ -10,9 +10,13 @@ import AddressForm from './AddressForm';
 
 interface BillingAddressProps {
   shippingAddress: typeof defaultAddress;
+  onBillingAddressChange: (address: typeof defaultAddress) => void;
 }
 
-const BillingAddress: FC<BillingAddressProps> = ({ shippingAddress }) => {
+const BillingAddress: FC<BillingAddressProps> = ({
+  shippingAddress,
+  onBillingAddressChange,
+}) => {
   const [address, setAddress] = useState(defaultAddress);
   const [useShippingAsBilling, setUseShippingAsBilling] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +52,7 @@ const BillingAddress: FC<BillingAddressProps> = ({ shippingAddress }) => {
     } else {
       setIsLoading(false);
     }
+    onBillingAddressChange(address);
   }, [isUserLoggedIn, currentUserEmail]);
 
   const addressesAreEqual = (addr1: DefaultAddress, addr2: DefaultAddress) => {
@@ -68,6 +73,14 @@ const BillingAddress: FC<BillingAddressProps> = ({ shippingAddress }) => {
     }
   };
 
+  const handleAddressChange = (
+    key: keyof typeof defaultAddress,
+    value: string
+  ) => {
+    setAddress((prev) => ({ ...prev, [key]: value }));
+    onBillingAddressChange({ ...address, [key]: value });
+  };
+
   return (
     <>
       <div className="flex items-end justify-between pb-5">
@@ -86,7 +99,10 @@ const BillingAddress: FC<BillingAddressProps> = ({ shippingAddress }) => {
       {isLoading ? (
         <p>Loading Billing Details</p>
       ) : (
-        <AddressForm addressData={address} />
+        <AddressForm
+          addressData={address}
+          onAddressChange={handleAddressChange}
+        />
       )}
     </>
   );

@@ -3,9 +3,13 @@ import { FC } from 'react';
 
 interface AddressFormProps {
   addressData: any;
+  onAddressChange: any;
 }
 
-const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
+const AddressForm: FC<AddressFormProps> = ({
+  addressData,
+  onAddressChange,
+}) => {
   return (
     <div className="flex flex-col gap-4">
       <Input
@@ -19,6 +23,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="First Name"
         placeholder="Enter your first name"
         value={addressData.first_name}
+        onChange={(e) => onAddressChange('first_name', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -34,6 +39,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="Last Name"
         placeholder="Enter your Last name"
         value={addressData.last_name}
+        onChange={(e) => onAddressChange('last_name', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -46,8 +52,9 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         isClearable
         type="text"
         label="Company"
-        placeholder="Enter your first name"
+        placeholder="Enter name of company"
         value={addressData.company}
+        onChange={(e) => onAddressChange('company', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -63,6 +70,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="Street Address"
         placeholder="Address Line 1"
         value={addressData.address_1}
+        onChange={(e) => onAddressChange('address_1', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -76,6 +84,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         type="text"
         placeholder="Address Line 2"
         value={addressData.address_2}
+        onChange={(e) => onAddressChange('address_2', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -91,6 +100,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="City"
         placeholder="City"
         value={addressData.city}
+        onChange={(e) => onAddressChange('city', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -103,6 +113,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         labelPlacement="inside"
         label="Province"
         value={addressData.province}
+        onChange={(e) => onAddressChange('province', e.target.value)}
       >
         <SelectItem key={'easterncape'} value={'Eastern Cape'}>
           Eastern Cape
@@ -143,6 +154,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="Postcode"
         placeholder="Postcode"
         value={addressData.postcode}
+        onChange={(e) => onAddressChange('postcode', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}
@@ -158,6 +170,7 @@ const AddressForm: FC<AddressFormProps> = ({ addressData }) => {
         label="Phone Number"
         placeholder="Phone Number"
         value={addressData.phone}
+        onChange={(e) => onAddressChange('phone', e.target.value)}
         // color={firstNameError === 'invalid' ? 'danger' : undefined}
         // errorMessage={firstNameError === 'invalid' && 'This field is required'}
         // onValueChange={setFirstName}

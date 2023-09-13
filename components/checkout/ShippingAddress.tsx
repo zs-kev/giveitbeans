@@ -45,7 +45,16 @@ const ShippingAddress: FC<ShippingAddressProps> = ({
     } else {
       setIsLoading(false);
     }
+    onShippingAddressChange(address);
   }, [isUserLoggedIn, currentUserEmail]);
+
+  const handleAddressChange = (
+    key: keyof typeof defaultAddress,
+    value: string
+  ) => {
+    setAddress((prev) => ({ ...prev, [key]: value }));
+    onShippingAddressChange({ ...address, [key]: value });
+  };
 
   return (
     <>
@@ -56,7 +65,10 @@ const ShippingAddress: FC<ShippingAddressProps> = ({
       {isLoading ? (
         <p>Loading Shipping Details</p>
       ) : (
-        <AddressForm addressData={address} />
+        <AddressForm
+          addressData={address}
+          onAddressChange={handleAddressChange}
+        />
       )}
     </>
   );
