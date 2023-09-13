@@ -1,4 +1,5 @@
 import { CartItem, useCart } from '@/context/CartContext';
+import { Divider } from '@nextui-org/react';
 import Image from 'next/image';
 import { FC } from 'react';
 
@@ -14,43 +15,52 @@ const OrderSummery: FC<OrderSummeryProps> = ({ cartItems, shippingCost }) => {
   const total = cartTotal + shippingCost;
 
   return (
-    <div>
-      <h2>Order Summery</h2>
+    <div className="p-10 sm:p-14">
+      <h2 className="pb-5">Order Summery</h2>
       <div>
         {cartItems.length > 0 ? (
           <>
             {cartItems.map((item) => (
-              <div key={item.productInfo.name} className="flex items-center">
+              <div
+                key={item.productInfo.name}
+                className="flex items-start gap-4"
+              >
                 <Image
                   src={item.productInfo.image}
                   width={86}
                   height={305}
                   alt={item.productInfo.name}
                 />
-                <div className="pr-6">
-                  <p>{item.productInfo.name}</p>
-                  <p>{item.quantity}</p>
+                <div className="flex items-start justify-between w-full">
+                  <div className="pr-6">
+                    <p className="font-Guy text-2xl">{item.productInfo.name}</p>
+                    <p className="text-base -mt-2">Quantity: {item.quantity}</p>
+                  </div>
+                  <p>R{item.productInfo.price}</p>
                 </div>
-                <p>R{item.productInfo.price}</p>
               </div>
             ))}
-            <div>
-              <div>
+
+            <div className="flex flex-col gap-2">
+              <Divider />
+              <div className="flex items-start justify-between">
                 <p>Subtotal:</p>
                 <p>R{cartTotal}</p>
               </div>
-              <div>
+              <div className="flex items-start justify-between">
                 <p>VAT (15%):</p>
                 <p>R{vat.toFixed(2)}</p>
               </div>
-              <div>
+              <div className="flex items-start justify-between">
                 <p>Shipping:</p>
                 <p>R{shippingCost.toFixed(2)}</p>
               </div>
-              <div>
-                <p>Total:</p>
-                <p>R{total.toFixed(2)}</p>
+              <Divider />
+              <div className="flex items-start justify-between">
+                <p className="font-Guy">Total:</p>
+                <p className="font-Guy">R{total.toFixed(2)}</p>
               </div>
+              <Divider />
             </div>
           </>
         ) : (

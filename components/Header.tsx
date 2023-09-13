@@ -8,6 +8,7 @@ import {
   NavbarMenuToggle,
 } from '@nextui-org/navbar';
 import {
+  Badge,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -49,6 +50,7 @@ const iconPages: {
 function Header() {
   const { cart } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isInvisible, setIsInvisible] = useState(false);
   // const currentRoute = usePathname();
 
   return (
@@ -125,7 +127,14 @@ function Header() {
           <Popover placement="bottom" showArrow offset={10} shouldCloseOnBlur>
             <PopoverTrigger>
               <button className="text-primary flex items-center gap-2">
-                <ShoppingCartIcon className="w-4" />
+                <Badge
+                  content={cart.length}
+                  disableOutline
+                  className="w-4 h-4 bg-secondary text-white"
+                  isInvisible={isInvisible}
+                >
+                  <ShoppingCartIcon className="w-4" />
+                </Badge>
                 Cart
               </button>
             </PopoverTrigger>

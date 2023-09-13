@@ -1,7 +1,7 @@
 'use client';
 
 import { UserContext } from '@/context/UserContext';
-import { Input } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api';
 import { useContext, useMemo, useState } from 'react';
 import { EyeFilledIcon } from '../icons/EyeFilledIcon';
@@ -40,8 +40,8 @@ const Signup: React.FC<SignupProps> = (props) => {
 
       const api = new WooCommerceRestApi({
         url: 'https://giveitbeans.cloudaccess.host/',
-        consumerKey: process.env.WOO_LIVE_CONSUMER!,
-        consumerSecret: process.env.WOO_LIVE_SECRET!,
+        consumerKey: process.env.NEXT_PUBLIC_WOO_LIVE_CONSUMER!,
+        consumerSecret: process.env.NEXT_PUBLIC_WOO_LIVE_SECRET!,
         version: 'wc/v3',
       });
 
@@ -132,11 +132,13 @@ const Signup: React.FC<SignupProps> = (props) => {
       {isLoading ? (
         <p>Creating account</p>
       ) : (
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <Input
+            className="font-Zilla"
             isRequired
             variant="bordered"
-            labelPlacement="outside"
+            radius="sm"
+            labelPlacement="inside"
             isClearable
             type="text"
             label="First Name"
@@ -149,9 +151,11 @@ const Signup: React.FC<SignupProps> = (props) => {
             onValueChange={setFirstName}
           />
           <Input
+            className="font-Zilla"
             isRequired
             variant="bordered"
-            labelPlacement="outside"
+            radius="sm"
+            labelPlacement="inside"
             isClearable
             type="text"
             label="Last Name"
@@ -164,9 +168,11 @@ const Signup: React.FC<SignupProps> = (props) => {
             onValueChange={setLastName}
           />
           <Input
+            className="font-Zilla"
             isRequired
             variant="bordered"
-            labelPlacement="outside"
+            radius="sm"
+            labelPlacement="inside"
             isClearable
             type="email"
             label="Email"
@@ -185,9 +191,11 @@ const Signup: React.FC<SignupProps> = (props) => {
             onValueChange={setEmail}
           />
           <Input
+            className="font-Zilla"
             isRequired
             variant="bordered"
-            labelPlacement="outside"
+            radius="sm"
+            labelPlacement="inside"
             type={isVisible ? 'text' : 'password'}
             label="Password"
             placeholder="Enter your password"
@@ -213,9 +221,11 @@ const Signup: React.FC<SignupProps> = (props) => {
             }
           />
           <Input
+            className="font-Zilla"
             isRequired
             variant="bordered"
-            labelPlacement="outside"
+            radius="sm"
+            labelPlacement="inside"
             type={isVisible ? 'text' : 'password'}
             label="Confirm Password"
             placeholder="Enter your password"
@@ -248,7 +258,15 @@ const Signup: React.FC<SignupProps> = (props) => {
               </button>
             }
           />
-          <button type="submit">Signup</button>
+          <Button
+            radius="full"
+            type="submit"
+            fullWidth
+            className="bg-secondary text-white font-Zilla text-base hover:bg-accent"
+            isLoading={isLoading}
+          >
+            Sign Up
+          </Button>
         </form>
       )}
       {error && <p>{error}</p>}

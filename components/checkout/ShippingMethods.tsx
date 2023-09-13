@@ -44,8 +44,8 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
     setIsLoading(true);
     const api = new WooCommerceRestApi({
       url: 'https://giveitbeans.cloudaccess.host/',
-      consumerKey: process.env.WOO_LIVE_CONSUMER!,
-      consumerSecret: process.env.WOO_LIVE_SECRET!,
+      consumerKey: process.env.NEXT_PUBLIC_WOO_LIVE_CONSUMER!,
+      consumerSecret: process.env.NEXT_PUBLIC_WOO_LIVE_SECRET!,
       version: 'wc/v3',
     });
 
@@ -80,14 +80,11 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
       });
   }, []);
 
-  console.log(shippingMethods);
-  console.log(isFreeShipping());
-
   return (
     <div>
-      <h2>Shipping Method</h2>
+      <h2 className="pb-5">Shipping Method</h2>
       {isLoading ? (
-        <p>Loading...</p>
+        <p>Fetching shipping options...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
@@ -95,7 +92,10 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
           {shippingMethods.map((method) => {
             if (method.method_id === 'free_shipping' && isFreeShipping()) {
               return (
-                <div key={method.id}>
+                <div
+                  key={method.id}
+                  className="flex items-center justify-between gap-5"
+                >
                   <input
                     type="radio"
                     name="shippingMethod"
@@ -112,7 +112,10 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
                       setShippingCost(cost);
                     }}
                   />
-                  <label>{method.title}</label>
+                  <label className="flex items-center justify-between w-full">
+                    <p>{method.title}</p>
+                    <p>R0.00</p>
+                  </label>
                 </div>
               );
             } else {
@@ -120,7 +123,10 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
                 ? parseFloat(method.settings.cost.value)
                 : 0;
               return (
-                <div key={method.id}>
+                <div
+                  key={method.id}
+                  className="flex items-center justify-between gap-5"
+                >
                   <input
                     type="radio"
                     name="shippingMethod"
@@ -137,8 +143,9 @@ const ShippingMethods: FC<ShippingMethodsProps> = ({ setShippingCost }) => {
                       setShippingCost(cost);
                     }}
                   />
-                  <label>
-                    {method.title} - R{cost.toFixed(2)}
+                  <label className="flex items-center justify-between w-full">
+                    <p>{method.title}</p>
+                    <p>R{cost.toFixed(2)}</p>
                   </label>
                 </div>
               );

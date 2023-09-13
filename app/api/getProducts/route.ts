@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 
 const api = new WooCommerceRestApi({
   url: 'https://giveitbeans.cloudaccess.host/',
-  consumerKey: process.env.WOO_LIVE_CONSUMER!,
-  consumerSecret: process.env.WOO_LIVE_SECRET!,
+  consumerKey: process.env.NEXT_PUBLIC_WOO_LIVE_CONSUMER!,
+  consumerSecret: process.env.NEXT_PUBLIC_WOO_LIVE_SECRET!,
   version: 'wc/v3',
 });
 

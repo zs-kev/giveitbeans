@@ -1,12 +1,15 @@
 'use client';
 
+import BillingAddress from '@/components/checkout/BilllingAddress';
 import OrderSummery from '@/components/checkout/OrderSummery';
+import ShippingAddress from '@/components/checkout/ShippingAddress';
 import ShippingMethods from '@/components/checkout/ShippingMethods';
 import Login from '@/components/userAccount/Login';
 import Signup from '@/components/userAccount/Signup';
 import { useCart } from '@/context/CartContext';
 import { UserContext } from '@/context/UserContext';
-import { Input } from '@nextui-org/react';
+import { defaultAddress } from '@/lib/utils/addressConstraints';
+import { Checkbox, Divider, Input } from '@nextui-org/react';
 import { useContext, useMemo, useState } from 'react';
 
 const CheckoutPage = () => {
@@ -15,6 +18,7 @@ const CheckoutPage = () => {
   const [guestEmail, setGuestEmail] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [shippingCost, setShippingCost] = useState(0);
+  const [shippingAddress, setShippingAddress] = useState(defaultAddress);
 
   const {
     isUserLoggedIn,
@@ -45,91 +49,121 @@ const CheckoutPage = () => {
   return (
     <section className="md:pt-6 lg:pt-10 xl:pt-14 text-left px-6 md:px-8 lg:px-0 maxWidth">
       <h1 className="text-left">Checkout</h1>
-      <div>
-        <h2>Customer Info</h2>
-        <p>*Required</p>
-        <div>
-          {isGuest ? (
-            <>
-              <Input
-                isRequired
-                variant="bordered"
-                labelPlacement="outside"
-                isClearable
-                type="email"
-                label="Email"
-                placeholder="Enter your email"
-                value={guestEmail}
-                color={
-                  validationState === 'invalid'
-                    ? 'danger'
-                    : undefined || emailError === 'invalid'
-                    ? 'danger'
-                    : undefined
-                }
-                errorMessage={
-                  (validationState === 'invalid' &&
-                    'Please enter a valid email') ||
-                  (emailError === 'invalid' && 'This field is required')
-                }
-                onValueChange={setGuestEmail}
-              />
-            </>
-          ) : (
-            <>
-              {isUserLoggedIn ? (
+      <div className="flex flex-col md:flex-row justify-center gap-10 pt-6 lg:pt-10 xl:pt-14 md:pb-6 lg:pb-10 xl:pb-28">
+        <div className="md:w-1/2 bg-white rounded-2xl p-10 sm:p-14 flex flex-col gap-10">
+          <div>
+            <div className="flex items-end justify-between pb-5">
+              <h2>Customer Info</h2>
+              <p>*Required</p>
+            </div>
+            <div>
+              {isGuest ? (
                 <>
-                  <p>
-                    Welcome back! You are now logged in as {currentUserEmail}
-                  </p>
-                  <p>
-                    Not you? <button onClick={handleSignOut}>Sign Out</button>
-                  </p>
+                  <Input
+                    isRequired
+                    variant="bordered"
+                    labelPlacement="inside"
+                    isClearable
+                    type="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    value={guestEmail}
+                    color={
+                      validationState === 'invalid'
+                        ? 'danger'
+                        : undefined || emailError === 'invalid'
+                        ? 'danger'
+                        : undefined
+                    }
+                    errorMessage={
+                      (validationState === 'invalid' &&
+                        'Please enter a valid email') ||
+                      (emailError === 'invalid' && 'This field is required')
+                    }
+                    onValueChange={setGuestEmail}
+                  />
                 </>
               ) : (
                 <>
-                  {showLogin ? (
-                    <Login
-                      onUserLogin={(email) => {
-                        loginUser();
-                        setCurrentUserEmail(email); // <-- Set the user email on successful login
-                      }}
-                    />
+                  {isUserLoggedIn ? (
+                    <>
+                      <p>
+                        Welcome back! You are now logged in as{' '}
+                        {currentUserEmail}
+                      </p>
+                      <p>
+                        Not you?{' '}
+                        <button onClick={handleSignOut}>Sign Out</button>
+                      </p>
+                    </>
                   ) : (
-                    <Signup
-                      onUserRegistered={(email) => {
-                        loginUser();
-                        setCurrentUserEmail(email); // <-- Set the user email on successful sign-up
-                      }}
-                    />
-                  )}
-                  {showLogin ? (
-                    <p>
-                      Dont have an account?
-                      <button onClick={() => setShowLogin(false)}>
-                        Sign Up
-                      </button>
-                    </p>
-                  ) : (
-                    <p>
-                      Already have an account?
-                      <button onClick={() => setShowLogin(true)}>Login</button>
-                    </p>
+                    <>
+                      {showLogin ? (
+                        <Login
+                          onUserLogin={(email) => {
+                            loginUser();
+                            setCurrentUserEmail(email); // <-- Set the user email on successful login
+                          }}
+                        />
+                      ) : (
+                        <Signup
+                          onUserRegistered={(email) => {
+                            loginUser();
+                            setCurrentUserEmail(email); // <-- Set the user email on successful sign-up
+                          }}
+                        />
+                      )}
+                      {showLogin ? (
+                        <p className="font-Zilla text-sm mt-2">
+                          Dont have an account?
+                          <button
+                            onClick={() => setShowLogin(false)}
+                            className="hover:text-secondary ease-in-out duration-300"
+                          >
+                            Sign Up
+                          </button>
+                        </p>
+                      ) : (
+                        <p className="font-Zilla text-sm mt-2">
+                          Already have an account?
+                          <button
+                            onClick={() => setShowLogin(true)}
+                            className="hover:text-secondary ease-in-out duration-300"
+                          >
+                            Login
+                          </button>
+                        </p>
+                      )}
+                    </>
                   )}
                 </>
               )}
-            </>
-          )}
-          <input
-            type="checkbox"
-            checked={isGuest}
-            onChange={(e) => setIsGuest(e.target.checked)}
-          />
-          <label>Checkout as Guest</label>
+              <Checkbox
+                checked={isGuest}
+                onChange={(e) => setIsGuest(e.target.checked)}
+                className="mt-4"
+              >
+                Checkout as Guest
+              </Checkbox>
+            </div>
+          </div>
+          <Divider />
+          <div>
+            <ShippingAddress onShippingAddressChange={setShippingAddress} />
+          </div>
+          <Divider />
+          <div>
+            <ShippingMethods setShippingCost={setShippingCost} />
+          </div>
+          <Divider />
+          <div>
+            <BillingAddress shippingAddress={shippingAddress} />
+          </div>
+        </div>
+        <div className="md:w-1/2">
+          <OrderSummery cartItems={cart} shippingCost={shippingCost} />
         </div>
       </div>
-      <ShippingMethods setShippingCost={setShippingCost} />
-      <OrderSummery cartItems={cart} shippingCost={shippingCost} />
     </section>
   );
 };

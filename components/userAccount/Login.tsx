@@ -1,7 +1,7 @@
 'use client';
 
 import { UserContext } from '@/context/UserContext';
-import { Input } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 import { useContext, useMemo, useState } from 'react';
 import { EyeFilledIcon } from '../icons/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '../icons/EyeSlashFilledIcon';
@@ -78,11 +78,13 @@ const Login: React.FC<LoginProps> = (props) => {
   }, [email]);
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="flex flex-col gap-4">
       <Input
         isRequired
         variant="bordered"
-        labelPlacement="outside"
+        className="font-Zilla"
+        radius="sm"
+        labelPlacement="inside"
         isClearable
         autoComplete="email"
         type="email"
@@ -103,9 +105,11 @@ const Login: React.FC<LoginProps> = (props) => {
         onValueChange={setEmail}
       />
       <Input
+        className="font-Zilla"
         isRequired
         variant="bordered"
-        labelPlacement="outside"
+        radius="sm"
+        labelPlacement="inside"
         type={isVisible ? 'text' : 'password'}
         label="Password"
         placeholder="Enter your password"
@@ -128,7 +132,15 @@ const Login: React.FC<LoginProps> = (props) => {
           </button>
         }
       />
-      <button type="submit">Login</button>
+      <Button
+        radius="full"
+        type="submit"
+        fullWidth
+        className="bg-secondary text-white font-Zilla text-base hover:bg-accent"
+        isLoading={isLoading}
+      >
+        Login
+      </Button>
     </form>
   );
 };

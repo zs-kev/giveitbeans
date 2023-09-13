@@ -1,6 +1,7 @@
 'use client';
 
 import { EssentialProductInfo, useCart } from '@/context/CartContext';
+import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -32,6 +33,7 @@ interface Product {
 const ProductPage = ({ params }: { params: { productId: string } }) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState(false);
   const [error, setError] = useState('');
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
@@ -85,6 +87,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
     }
   };
   const handleAddToCart = () => {
+    setAddingToCart(true);
     if (product) {
       const essentialProductInfo: EssentialProductInfo = {
         id: product.id,
@@ -100,6 +103,7 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
         0;
       addToCart(essentialProductInfo, quantity, variationId);
     }
+    setAddingToCart(false);
   };
 
   return (
@@ -192,7 +196,16 @@ const ProductPage = ({ params }: { params: { productId: string } }) => {
                     min="1"
                     className="text-center w-24 border-primary border-[1px] rounded-full bg-transparent font-Zilla text-primary focus:border-secondary"
                   />
-                  <button onClick={handleAddToCart}>Add to Cart</button>
+                  <Button
+                    onClick={handleAddToCart}
+                    radius="full"
+                    type="submit"
+                    className="bg-secondary text-white font-Zilla text-base hover:bg-accent"
+                    isLoading={addingToCart}
+                  >
+                    {' '}
+                    Add to Cart
+                  </Button>
                 </div>
               </div>
               <hr className="w-full border-primary" />

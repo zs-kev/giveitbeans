@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-lightpattern">
+      <body className="bg-lightpattern" tabIndex={0}>
         <Providers>
           <Header />
           <main>{children}</main>
